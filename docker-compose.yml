@@ -8,6 +8,8 @@ services:
       - 4444:4444 # selenium sever port
       - 7900:7900
     container_name: selenium
+    networks:
+      - e2e_test
 
   python3:
     #image: python:3.10
@@ -18,13 +20,13 @@ services:
       - .:/var/www/selenium
     tty: true
     ports:
-      - 5000
+      - 5001
     container_name: python3
     depends_on: # seleniumコンテナの後で起動させるように指定
       - selenium
+    networks:
+      - e2e_test
 
 networks:
-  test_db:
-    external: true
-  selenium:
+  e2e_test:
     external: true
